@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+// // require dotenv in dev mode
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
