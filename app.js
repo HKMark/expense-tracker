@@ -2,6 +2,8 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const Record = require('./models/record')
+const mongoose = require('mongoose')
+
 require('./config/mongoose')
 
 const app = express()
@@ -23,11 +25,11 @@ app.get('/records/new', (req, res) => {
 })
 
 app.post('/records', (req, res) => {
-  console.log(req.body)
   const name = req.body.name
   const date = req.body.date
   const amount = req.body.amount
-  const userId = req.user._id
+  const num = 123456789
+  const userId = mongoose.Types.ObjectId(num)
   const categoryId = req.body.category
   return Record.create({ name, date, amount, userId, categoryId })
     .then(() => res.redirect('/'))
