@@ -6,11 +6,8 @@ const recordSchema = new Schema({
     required: true
   },
   date: {
-    type: Schema.Types.Date,
-    required: true,
-    options: {
-      format: 'YYYY/MM/DD'
-    }
+    type: Date,
+    required: true
   },
   amount: {
     type: Number,

@@ -8,6 +8,7 @@ const SEED_USER = {
   email: 'root@example.com',
   password: '12345678'
 }
+
 db.once('open', () => {
   bcrypt
     .genSalt(10)
@@ -20,11 +21,11 @@ db.once('open', () => {
     .then(user => {
       const userId = user._id
       return Promise.all([
-        Record.create({ name: '午餐', date: '2019/04/23', amount: '60', userId, categoryId: '4' }),
-        Record.create({ name: '晚餐', date: '2019/04/23', amount: '60', userId, categoryId: '4' }),
-        Record.create({ name: '捷運', date: '2019/04/23', amount: '120', userId, categoryId: '2' }),
-        Record.create({ name: '電影：驚奇隊長', date: '2019/04/23', amount: '220', userId, categoryId: '3' }),
-        Record.create({ name: '租金', date: '2015/04/01', amount: '25000', userId, categoryId: '1' })
+        Record.create({ name: '午餐', date: '2019-04-23', amount: '60', userId, categoryId: '4' }),
+        Record.create({ name: '晚餐', date: '2019-04-23', amount: '60', userId, categoryId: '4' }),
+        Record.create({ name: '捷運', date: '2019-04-23', amount: '120', userId, categoryId: '2' }),
+        Record.create({ name: '電影：驚奇隊長', date: '2019-04-23', amount: '220', userId, categoryId: '3' }),
+        Record.create({ name: '租金', date: '2015-04-01', amount: '25000', userId, categoryId: '1' })
       ])
     })
     .then(category => {
