@@ -7,6 +7,7 @@ const methodOverride = require('method-override')
 const Record = require('./models/record')
 const Category = require('./models/category')
 
+const usePassport = require('./config/passport')
 require('./config/mongoose')
 
 const routes = require('./routes')
@@ -24,6 +25,8 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(methodOverride('_method'))
+
+usePassport(app)
 
 app.use(routes)
 
