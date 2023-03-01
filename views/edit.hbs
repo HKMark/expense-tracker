@@ -1,4 +1,4 @@
-<form action="/records/{{ record._id }}/edit" method="POST">
+<form action="/records/{{ record._id }}?_method=PUT" method="POST">
   <label for="name">名稱：</label>
   <input type="text" placeholder="例如：交通費" name="name" value="{{ record.name }}">
   <label for="date">日期：</label>

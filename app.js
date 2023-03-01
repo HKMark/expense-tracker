@@ -1,9 +1,11 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
+
 const Record = require('./models/record')
 const Category = require('./models/category')
-const mongoose = require('mongoose')
 
 require('./config/mongoose')
 
@@ -13,6 +15,8 @@ app.engine('hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use(methodOverride('_method'))
 
 app.get('/', async (req, res) => {
   try {
@@ -65,7 +69,7 @@ app.get('/records/:id/edit', async (req, res) => {
   }
 })
 
-app.post('/records/:id/edit', async (req, res) => {
+app.put('/records/:id', async (req, res) => {
   try {
     const id = req.params.id
     const name = req.body.name
@@ -84,7 +88,7 @@ app.post('/records/:id/edit', async (req, res) => {
   }
 })
 
-app.post('/records/:id/delete', async (req, res) => {
+app.delete('/records/:id', async (req, res) => {
   try {
     const id = req.params.id
     const record = await Record.findById(id)
