@@ -14,19 +14,22 @@ app.set('view engine', 'hbs')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/', (req, res) => {
-  Record.find()
-    .lean()
-    .then(records => {
-      records = records.map(record => {
-        return {
-          ...record,
-          date: record.date.toISOString().slice(0, 10)
-        }
-      })
-      res.render('index', { records })
+app.get('/', async (req, res) => {
+  try {
+    const records = await Record.find().lean()
+    const mappedRecords = records.map(record => {
+      return {
+        ...record,
+        date: record.date.toISOString().slice(0, 10)
+      }
     })
-    .catch(error => console.error(error))
+    const totalAmount = mappedRecords.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue.amount
+    }, 0)
+    res.render('index', { records: mappedRecords, totalAmount })
+  } catch (error) {
+    console.error(error)
+  }
 })
 
 app.get('/records/new', (req, res) => {
