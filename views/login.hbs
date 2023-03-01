@@ -1,1 +1,22 @@
-<h2>Login</h2>
+<div class="row mt-5">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body">
+      <h1 class="text-center mt-3">登入或註冊</h1>
+      <form action="/users/login" method="POST">
+        <div class="mb-3">
+          <label for="email" class="mb-2">Email</label>
+          <input type="email" id="email" name="email" class="form-control" placeholder="輸入 Email">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="mb-2">密碼</label>
+          <input type="password" id="password" name="password" class="form-control" placeholder="輸入密碼">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">登入</button>
+        <a href="/auth/facebook" class="btn btn-info btn-block">使用 Facebook 登入</a>
+      </form>
+      <p class="lead mt-4">
+        沒有帳號? <a href="/users/register">建立新帳號</a>
+      </p>
+    </div>
+  </div>
+</div>
