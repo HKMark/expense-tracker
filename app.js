@@ -32,66 +32,67 @@ app.get('/', async (req, res) => {
   }
 })
 
-app.get('/records/new', (req, res) => {
-  return res.render('new')
+app.get('/records/new', async (req, res) => {
+  res.render('new')
 })
 
-app.post('/records', (req, res) => {
-  const name = req.body.name
-  const date = req.body.date
-  const amount = req.body.amount
-  const num = 123456789
-  const userId = mongoose.Types.ObjectId(num)
-  const categoryId = req.body.category
-  return Record.create({ name, date, amount, userId, categoryId })
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
+app.post('/records', async (req, res) => {
+  try {
+    const name = req.body.name
+    const date = req.body.date
+    const amount = req.body.amount
+    const num = 123456789
+    const userId = mongoose.Types.ObjectId(num)
+    const categoryId = req.body.category
+    await Record.create({ name, date, amount, userId, categoryId })
+    res.redirect('/')
+  } catch (error) {
+    console.log(error)
+  }
 })
 
-app.get('/records/:id/edit', (req, res) => {
-  const id = req.params.id
-  Record.findById(id)
-    .lean()
-    .then(record => {
-      record.date = record.date.toISOString().slice(0, 10)
-      Category.findOne({ id: record.categoryId })
-        .lean()
-        .then(category => {
-          categoryName = category.name
-          Category.find()
-            .lean()
-            .then(categoryList => {
-              res.render('edit', { record, categoryName, categoryList })
-            })
-        })
-    })
-    .catch(error => console.log(error))
+app.get('/records/:id/edit', async (req, res) => {
+  try {
+    const id = req.params.id
+    const record = await Record.findById(id).lean()
+    record.date = record.date.toISOString().slice(0, 10)
+    const category = await Category.findOne({ id: record.categoryId }).lean()
+    const categoryName = category.name
+    const categoryList = await Category.find().lean()
+    res.render('edit', { record, categoryName, categoryList })
+  } catch (error) {
+    console.log(error)
+  }
 })
 
-app.post('/records/:id/edit', (req, res) => {
-  const id = req.params.id
-  const name = req.body.name
-  const date = req.body.date
-  const amount = req.body.amount
-  const categoryId = req.body.category
-  return Record.findById(id)
-    .then(record => {
-      record.name = name
-      record.date = date
-      record.categoryId = categoryId
-      record.amount = amount
-      return record.save()
-    })
-    .then(() => res.redirect(`/`))
-    .catch(error => console.log(error))
+app.post('/records/:id/edit', async (req, res) => {
+  try {
+    const id = req.params.id
+    const name = req.body.name
+    const date = req.body.date
+    const amount = req.body.amount
+    const categoryId = req.body.category
+    const record = await Record.findById(id)
+    record.name = name
+    record.date = date
+    record.categoryId = categoryId
+    record.amount = amount
+    await record.save()
+    res.redirect(`/`)
+  } catch (error) {
+    console.log(error)
+  }
 })
 
-app.post('/records/:id/delete', (req, res) => {
-  const id = req.params.id
-  return Record.findById(id)
-    .then(record => record.remove())
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
+app.post('/records/:id/delete', async (req, res) => {
+  try {
+    const id = req.params.id
+    const record = await Record.findById(id)
+    await record.remove()
+    res.redirect('/')
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 app.listen(3000, () => {
