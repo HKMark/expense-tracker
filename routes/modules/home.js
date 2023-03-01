@@ -5,7 +5,8 @@ const Category = require('../../models/category')
 
 router.get('/', async (req, res) => {
   try {
-    const records = await Record.find().lean()
+    const userId = req.user._id
+    const records = await Record.find({ userId }).lean()
     const mappedRecords = records.map(record => {
       return {
         ...record,

@@ -12,8 +12,7 @@ router.post('/', async (req, res) => {
     const name = req.body.name
     const date = req.body.date
     const amount = req.body.amount
-    const num = 123456789
-    const userId = user._id
+    const userId = req.user._id
     const categoryId = req.body.category
     await Record.create({ name, date, amount, userId, categoryId })
     res.redirect('/')
@@ -24,8 +23,9 @@ router.post('/', async (req, res) => {
 
 router.get('/:id/edit', async (req, res) => {
   try {
-    const id = req.params.id
-    const record = await Record.findById(id).lean()
+    const userId = req.user._id
+    const _id = req.params.id
+    const record = await Record.findOne({ _id, userId }).lean()
     record.date = record.date.toISOString().slice(0, 10)
     const category = await Category.findOne({ id: record.categoryId }).lean()
     const categoryName = category.name
@@ -38,12 +38,13 @@ router.get('/:id/edit', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const id = req.params.id
+    const userId = req.user._id
+    const _id = req.params.id
     const name = req.body.name
     const date = req.body.date
     const amount = req.body.amount
     const categoryId = req.body.category
-    const record = await Record.findById(id)
+    const record = await Record.findOne({ _id, userId })
     record.name = name
     record.date = date
     record.categoryId = categoryId
@@ -57,8 +58,9 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    const id = req.params.id
-    const record = await Record.findById(id)
+    const userId = req.user._id
+    const _id = req.params.id
+    const record = await Record.findOne({ _id, userId })
     await record.remove()
     res.redirect('/')
   } catch (error) {
