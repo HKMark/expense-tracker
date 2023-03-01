@@ -16,10 +16,14 @@
       background-color: #e95420;">
     <div class="container">
       <a class="navbar-brand" href="/">
-        <i class="fa-regular fa-notebook"></i><h4>家庭記帳本</h3>
+      <h4>家庭記帳本</h3>
       </a>
       <div class="text-end">
+        {{#if isAuthenticated}}
+        <a href="/users/logout" class="btn btn-outline-light">登出</a>
+        {{else}}
         <a href="/users/login" class="btn btn-outline-light">登入</a>
+        {{/if}}
       </div>
     </div>
   </nav>
