@@ -28,11 +28,11 @@ db.once('open', async () => {
       Record.create({ name: '租金', date: '2015-04-01', amount: '25000', userId, categoryId: '1' })
     ])
     await Promise.all([
-      Category.create({ id: '1', name: '家居物業' }),
-      Category.create({ id: '2', name: '交通出行' }),
-      Category.create({ id: '3', name: '休閒娛樂' }),
-      Category.create({ id: '4', name: '餐飲食品' }),
-      Category.create({ id: '5', name: '其他' })
+      Category.create({ id: '1', name: '家居物業', icon: 'fa-solid fa-house' }),
+      Category.create({ id: '2', name: '交通出行', icon: 'fa-solid fa-van-shuttle' }),
+      Category.create({ id: '3', name: '休閒娛樂', icon: 'fa-solid fa-face-grin-beam' }),
+      Category.create({ id: '4', name: '餐飲食品', icon: 'fa-solid fa-utensils' }),
+      Category.create({ id: '5', name: '其他', icon: 'fa-solid fa-pen' })
     ])
     console.log('done.')
     process.exit()
