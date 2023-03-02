@@ -1,3 +1,20 @@
+<form class="d-flex flex-row" action="/filter" method="POST">
+  <select class="form-select col" id="filter" name="filter" onchange="this.form.submit()" categoryId="{{categoryId}}"
+    categoryName="{{categoryName}}">
+    {{#if categoryName}}
+    <option value="{{categoryId}}" hidden="hidden" selected="selected">{{categoryName}}</option>
+    {{else}}
+    <option value="all" hidden="hidden" selected="selected">全部</option>
+    {{/if}}
+    <option value="all">全部</option>
+    <option value="1">家居物業</option>
+    <option value="2">交通出行</option>
+    <option value="3">休閒娛樂</option>
+    <option value="4">餐飲食品</option>
+    <option value="5">其他</option>
+  </select>
+</form>
+
 <h3>總金額：{{ totalAmount }}</h3>
 <ul>
   {{#each records}}
