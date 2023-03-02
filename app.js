@@ -13,12 +13,13 @@ require('./config/mongoose')
 
 const routes = require('./routes')
 const app = express()
+const port = process.env.PORT
 
 app.engine('hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
@@ -41,6 +42,7 @@ app.use((req, res, next) => {
 
 app.use(routes)
 
-app.listen(3000, () => {
-  console.log('App is running on http://localhost:3000')
+// start and listen on the Express server
+app.listen(port, () => {
+  console.log(`Express is listening on http://localhost:${port}`)
 })
