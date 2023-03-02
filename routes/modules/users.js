@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
+const bcrypt = require('bcryptjs')
 const User = require('../../models/user')
 
 router.get('/login', (req, res) => {
@@ -46,10 +47,12 @@ router.post('/register', async (req, res) => {
         confirmPassword
       })
     }
+    const salt = await bcrypt.genSalt(10)
+    const hash = await bcrypt.hash(password, salt)
     await User.create({
       name,
       email,
-      password
+      password: hash // 用雜湊值取代原本的使用者密碼
     })
     res.redirect('/')
   } catch (err) {
