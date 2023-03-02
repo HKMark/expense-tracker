@@ -32,8 +32,6 @@ router.post('/', async (req, res) => {
       const totalAmount = mappedRecords.reduce((accumulator, currentValue) => {
         return accumulator + currentValue.amount
       }, 0)
-      console.log(categoryId)
-      console.log(categoryName)
       res.render('index', { records: mappedRecords, totalAmount, categoryId, categoryName })
     }
   } catch (error) {
