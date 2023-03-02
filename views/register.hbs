@@ -3,6 +3,7 @@
     <div class="card card-body">
       <h1 class="text-center mt-3">註冊</h1>
       <form action="/users/register" method="POST">
+        {{> message}}
         <div class="mb-3">
           <label for="name" class="mb-2">姓名</label>
           <input type="text" id="name" name="name" class="form-control" placeholder="輸入全名" value="{{ name }}">
