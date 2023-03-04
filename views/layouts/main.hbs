@@ -17,7 +17,7 @@
       background-color: #e95420;">
     <div class="container">
       <a class="navbar-brand" href="/">
-      <h4>家庭記帳本</h3>
+      <h4>{{#if isAuthenticated}}{{ user.name}} 的{{/if}}家庭記帳本</h3>
       </a>
       <div class="text-end">
         {{#if isAuthenticated}}
