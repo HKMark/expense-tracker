@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
   try {
     const userId = req.user._id
     const categories = await Category.find().lean()
-    const records = await Record.find({ userId }).lean()
+    const records = await Record.find({ userId }).sort({ date: 'desc' }).lean()
     const mappedRecords = await Promise.all(records.map(async (record) => {
       const categoryId = record.categoryId
       const category = await Category.findOne({ _id: categoryId }).lean()

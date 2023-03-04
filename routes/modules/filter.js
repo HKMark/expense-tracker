@@ -9,7 +9,7 @@ router.post('/', async (req, res) => {
     const categories = await Category.find().lean()
     const categoryId = req.body.filter
     if (categoryId === 'all') {
-      const records = await Record.find({ userId }).lean()
+      const records = await Record.find({ userId }).sort({ date: 'desc' }).lean()
       const mappedRecords = await Promise.all(records.map(async (record) => {
         const categoryId = record.categoryId
         const category = await Category.findOne({ _id: categoryId }).lean()
@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
       }, 0).toFixed(2)
       res.render('index', { records: mappedRecords, totalAmount, categories })
     } else {
-      const records = await Record.find({ userId, categoryId }).lean()
+      const records = await Record.find({ userId, categoryId }).sort({ date: 'desc' }).lean()
       const mappedRecords = await Promise.all(records.map(async (record) => {
         const categoryId = record.categoryId
         const category = await Category.findOne({ _id: categoryId }).lean()
