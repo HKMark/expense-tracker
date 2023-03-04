@@ -7,15 +7,18 @@ router.get('/', async (req, res) => {
   try {
     const userId = req.user._id
     const records = await Record.find({ userId }).lean()
-    const mappedRecords = records.map(record => {
+    const mappedRecords = await Promise.all(records.map(async (record) => {
+      const categoryId = record.categoryId
+      const category = await Category.findOne({ id: categoryId }).lean()
       return {
         ...record,
-        date: record.date.toISOString().slice(0, 10)
+        date: record.date.toISOString().slice(0, 10),
+        icon: category.icon
       }
-    })
+    }))
     const totalAmount = mappedRecords.reduce((accumulator, currentValue) => {
       return accumulator + currentValue.amount
-    }, 0)
+    }, 0).toFixed(2)
     res.render('index', { records: mappedRecords, totalAmount })
   } catch (error) {
     console.error(error)
